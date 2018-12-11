@@ -58,3 +58,14 @@
 *删除dev分支*  
 >**`git branch -D dev`**  
 *强制删除dev分支*  
+# **Git-Flow**  
+## **Master 分⽀**
+### **这个分⽀是最近发布到⽣产环境的代码，最近发布的*Release*， 这个分⽀只能从其他分⽀合并，不能在这个分⽀直接修改**  
+## **Develop  分⽀**
+### **这个分⽀是我们是我们的主开发分⽀，包含所有要发布到下⼀个*Release*的代码，这个主要合并与其他分⽀，⽐如*Feature*分⽀**  
+## **Feature 分⽀**
+### **这个分⽀主要是⽤来开发⼀个新的功能，⼀旦开发完成，我们合并回*Develop*分⽀进⼊下⼀个*Release***  
+## **Release 分⽀**
+### **当你需要⼀个发布⼀个新*Release*的时候，我们基于*Develop*分⽀创建⼀个*Release*分⽀，完成*Release*后，我们合并到*Master*和*Develop*分⽀**  
+## **Hotfix 分⽀**
+### **当我们在*Production*发现新的*Bug*时候，我们需要创建⼀个*Hotfix*, 完成*Hotfix*后，我们合并回*Master*和*Develop*分⽀，所以*Hotfix*的改动会进⼊下⼀个*Release***
