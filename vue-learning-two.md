@@ -6,46 +6,46 @@
 
 ### **唯一的例外是，使用 Object.freeze（）来放置已有属性被修改，这也意味响应式系统能够无法追踪变化。**
 
-> ```
-> <div id="app">
->   <p>{{ foo }}</p>
->   <!-- 这将不再更新 `foo`! -->
->   <button v-on:click="foo = 'baz'">点我修改</button>
-> </div>
-> ```
->
-> ```
-> var obj = {
->   foo: 'bar'
-> }
->
-> Object.freeze(obj)
->
-> new Vue({
->   el: '#app',
->   data: obj
-> })
-> ```
+```html
+<div id="app">
+  <p>{{ foo }}</p>
+  <!-- 这将不再更新 `foo`! -->
+  <button v-on:click="foo = 'baz'">点我修改</button>
+</div>
+```
+
+```javascript
+var obj = {
+  foo: "bar"
+};
+
+Object.freeze(obj);
+
+new Vue({
+  el: "#app",
+  data: obj
+});
+```
 
 ### **值得注意的是，如果实例已经创建，那么只有那些 data 中的原本就已经存在的属性，才是响应式的，而在实例创建后再添加的属性不会出发任何响应式更新**
 
 ### **除了 data 属性，Vue 实例还暴漏了一些有用的实例属性和方法。这些属性与方法都具有前缀\$，以便与用户定义的属性有所区分。例如：**
 
-> ```
-> var data = { a: 1 }
-> var vm = new Vue({
->  el: '#example',
->  data: data
-> })
->
-> vm.$data === data // => true
-> vm.$el === document.getElementById('example') // => true
->
-> // $watch 是一个实例方法
-> vm.$watch('a', function (newValue, oldValue) {
->  // 此回调函数将在 `vm.a` 改变后调用
-> })
-> ```
+```javascript
+var data = { a: 1 };
+var vm = new Vue({
+  el: "#example",
+  data: data
+});
+
+vm.$data === data; // => true
+vm.$el === document.getElementById("example"); // => true
+
+// $watch 是一个实例方法
+vm.$watch("a", function(newValue, oldValue) {
+  // 此回调函数将在 `vm.a` 改变后调用
+});
+```
 
 ## **生命周期钩子函数**
 
@@ -53,18 +53,18 @@
 
 ### **在实例创建后调用 created 钩子函数：**
 
-> ```
-> new Vue({
->  data: {
->    a: 1
->  },
->  created: function () {
->    // `this` 指向 vm 实例
->    console.log('a is: ' + this.a)
->  }
-> })
-> // 结果是 "a is: 1"
-> ```
+```javascript
+new Vue({
+  data: {
+    a: 1
+  },
+  created: function() {
+    // `this` 指向 vm 实例
+    console.log("a is: " + this.a);
+  }
+});
+// 结果是 "a is: 1"
+```
 
 ## **不要在选项属性或者回调函数中使用箭头函数。因为箭头函数会绑定父级上下文，所以 this 不会按照预期指向 Vue 实例，经常会产生错误**
 
@@ -72,7 +72,7 @@
 
 ## _插值表达式_
 
-## **#文本**
+## **文本**
 
 ### **数据绑定最基础的形式，就是使用“mustache”语法（双花括号）的文本插值**
 
@@ -88,24 +88,22 @@
 
 ### **双花括号语法会将数据中的 HTML 转为纯文本后再进行插值。为了输出真正的 HTML，可以使用 V-HTML 指令**
 
-> ```
->    <p>
->      <span v-html="rawHtml"></span>
->    </p>
-> ```
->
-> ```
->     new Vue({
->          el : "#app",
->          data:{
->             rawHtml : "<span style='color:red'>222222</span>"
->            }
->        })
-> ```
+```html
+<p><span v-html="rawHtml"></span></p>
+```
+
+```javascript
+new Vue({
+  el: "#app",
+  data: {
+    rawHtml: "<span style='color:red'>222222</span>"
+  }
+});
+```
 
 ### **span 中的内容，将会被替换为 rawHTML 属性的值，并且作为原始 HTML 插入，但是 v-html 无法用来组合局部模板，这是因为 Vue 不是基于字符串的模板引擎。繁殖对于用户界面，组件更适合作为可重用和可组合的基本单位，而且网站中动态渲染任意 HTML 是很危险的很容易受到 xss 攻击。**
 
-## **#属性**
+## **属性**
 
 ### **不能再 Vue 模板中的 HTML 属性上使用双花括号语法。而是应该使用 v-bind 指令**
 
@@ -125,27 +123,30 @@
 
 ### **例子：将 hello 翻转**
 
-> ```
-> <div id="example">
->  <p>初始 message 是："{{ message }}"</p>
->  <p>计算后的翻转 message 是："{{ reversedMessage }}"</p>
-> </div>
-> ```
->
-> ```
-> var vm = new Vue({
->  el: '#example',
->  data: {
->    message: 'Hello'
->  },
->  computed: {
->    // 一个 computed 属性的 getter 函数
->    reversedMessage: function () {
->      // `this` 指向 vm 实例
->      return this.message.split('').reverse().join('')
->    }
->  }
-> })
-> ```
+```html
+<div id="example">
+  <p>初始 message 是："{{ message }}"</p>
+  <p>计算后的翻转 message 是："{{ reversedMessage }}"</p>
+</div>
+```
 
-### **在这里我们声明了一个 computed 属性 reversedMessage。然后恩我 Ivm.reversedMessage 属性提供了一个函数，作为它返回值函数（getter 函数），通过这个例子我们可以看出，vm.reversedMessage 的值总是依赖于 vm.message 的值**
+```javascript
+var vm = new Vue({
+  el: "#example",
+  data: {
+    message: "Hello"
+  },
+  computed: {
+    // 一个 computed 属性的 getter 函数
+    reversedMessage: function() {
+      // `this` 指向 vm 实例
+      return this.message
+        .split("")
+        .reverse()
+        .join("");
+    }
+  }
+});
+```
+
+### **在这里我们声明了一个 computed 属性 reversedMessage。然后为 vm.reversedMessage 属性提供了一个函数，作为它返回值函数（getter 函数），通过这个例子我们可以看出，vm.reversedMessage 的值总是依赖于 vm.message 的值**
